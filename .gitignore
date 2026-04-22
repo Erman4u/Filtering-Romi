@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Python
+__pycache__/
+backend/__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+
+# Large Files (Too big for GitHub without LFS)
+Model/*.pkl
+
+# IDE / Misc
+.vscode/
+.idea/
+.DS_Store
+*.log
+.env*
+.vercel
