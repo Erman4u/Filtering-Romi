@@ -4,7 +4,7 @@ from recommendation_logic import RecommendationEngine
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Initialize engine
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Model')
