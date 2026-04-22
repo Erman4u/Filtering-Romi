@@ -10,7 +10,7 @@ import MethodSelector from "@/components/MethodSelector";
 import MovieCard from "@/components/MovieCard";
 import PreferenceForm from "@/components/PreferenceForm";
 
-const API_BASE = "http://127.0.0.1:5000/api";
+const API_BASE = "https://erman4u-filtering-romi.hf.space/api";
 
 type Method = "demographic" | "content" | "collaborative";
 
@@ -24,14 +24,14 @@ interface Movie {
 export default function RecommenderPage() {
   const [method, setMethod] = useState<Method>("demographic");
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [allMovies, setAllMovies] = useState<{title: string, id: number}[]>([]);
+  const [allMovies, setAllMovies] = useState<{ title: string, id: number }[]>([]);
   const [selectedTitle, setSelectedTitle] = useState("");
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [profile, setProfile] = useState({ age: "all", gender: "all" });
   const [minRating, setMinRating] = useState(0);
   const [yearRange, setYearRange] = useState<[number, number]>([1900, 2024]);
   const [userId, setUserId] = useState("10");
-  const [userPersona, setUserPersona] = useState<{name: string, desc: string, top_genres: string[]} | null>(null);
+  const [userPersona, setUserPersona] = useState<{ name: string, desc: string, top_genres: string[] } | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -67,7 +67,7 @@ export default function RecommenderPage() {
   };
 
   const toggleGenre = (genre: string) => {
-    setSelectedGenres(prev => 
+    setSelectedGenres(prev =>
       prev.includes(genre) ? prev.filter(g => g !== genre) : [...prev, genre]
     );
   };
@@ -115,8 +115,8 @@ export default function RecommenderPage() {
             <span className="text-sm font-semibold">Kembali ke Beranda</span>
           </Link>
           <div className="text-right">
-             <h2 className="text-2xl font-bold text-black">Recommendation Hub</h2>
-             <p className="text-black/40 text-xs mt-1">Interactive Experiment Engine</p>
+            <h2 className="text-2xl font-bold text-black">Recommendation Hub</h2>
+            <p className="text-black/40 text-xs mt-1">Interactive Experiment Engine</p>
           </div>
         </div>
 
@@ -124,9 +124,9 @@ export default function RecommenderPage() {
         <MethodSelector current={method} onChange={setMethod} />
 
         {/* Preference Form */}
-        <PreferenceForm 
-          selectedGenres={selectedGenres} 
-          onToggleGenre={toggleGenre} 
+        <PreferenceForm
+          selectedGenres={selectedGenres}
+          onToggleGenre={toggleGenre}
           profile={profile}
           onProfileChange={updateProfile}
           minRating={minRating}
@@ -139,46 +139,46 @@ export default function RecommenderPage() {
         <div className="flex flex-col items-center gap-4 mb-16">
           {method === "content" && (
             <div className="flex w-full max-w-xl glass rounded-2xl p-2 gap-2">
-               <div className="flex-1 flex items-center px-4 gap-3">
-                 <Film className="w-5 h-5 text-black/20" />
-                 <input 
-                   list="movie-list"
-                   placeholder="Ketik judul film favoritmu..."
-                   className="bg-transparent border-none outline-none text-black text-sm w-full h-10"
-                   value={selectedTitle}
-                   onChange={(e) => setSelectedTitle(e.target.value)}
-                 />
-                 <datalist id="movie-list">
-                    {allMovies.slice(0, 100).map((m, i) => <option key={`${m.id}-${i}`} value={m.title} />)}
-                 </datalist>
-               </div>
-               <button 
-                 onClick={fetchRecommendations}
-                 className="p-3 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors"
-                >
-                 <Search className="w-5 h-5" />
-               </button>
+              <div className="flex-1 flex items-center px-4 gap-3">
+                <Film className="w-5 h-5 text-black/20" />
+                <input
+                  list="movie-list"
+                  placeholder="Ketik judul film favoritmu..."
+                  className="bg-transparent border-none outline-none text-black text-sm w-full h-10"
+                  value={selectedTitle}
+                  onChange={(e) => setSelectedTitle(e.target.value)}
+                />
+                <datalist id="movie-list">
+                  {allMovies.slice(0, 100).map((m, i) => <option key={`${m.id}-${i}`} value={m.title} />)}
+                </datalist>
+              </div>
+              <button
+                onClick={fetchRecommendations}
+                className="p-3 bg-blue-600 rounded-xl hover:bg-blue-500 transition-colors"
+              >
+                <Search className="w-5 h-5" />
+              </button>
             </div>
           )}
 
           {method === "collaborative" && (
             <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
               <div className="flex items-center gap-4 glass px-6 py-3 rounded-2xl text-black">
-                 <User className="w-5 h-5 text-black/20" />
-                 <span className="text-sm text-black/60">Simulasi untuk User ID:</span>
-                 <input 
-                   type="number" 
-                   className="bg-black/5 border border-black/10 rounded-lg px-3 py-1 text-sm w-20 outline-none focus:border-blue-500 transition-colors font-bold"
-                   value={userId}
-                   onChange={(e) => setUserId(e.target.value)}
-                 />
-                 <button onClick={fetchRecommendations} className="hover:text-blue-400 transition-colors">
-                    <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                 </button>
+                <User className="w-5 h-5 text-black/20" />
+                <span className="text-sm text-black/60">Simulasi untuk User ID:</span>
+                <input
+                  type="number"
+                  className="bg-black/5 border border-black/10 rounded-lg px-3 py-1 text-sm w-20 outline-none focus:border-blue-500 transition-colors font-bold"
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
+                />
+                <button onClick={fetchRecommendations} className="hover:text-blue-400 transition-colors">
+                  <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                </button>
               </div>
 
               {userPersona && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="w-full glass rounded-3xl p-6 border-blue-100 shadow-xl shadow-blue-500/5"
@@ -188,22 +188,22 @@ export default function RecommenderPage() {
                       <User className="w-8 h-8" />
                     </div>
                     <div className="space-y-2">
-                       <div className="flex items-center gap-3">
-                          <h4 className="text-lg font-black text-black">{userPersona.name}</h4>
-                          <span className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider">
-                            Verified Taste
+                      <div className="flex items-center gap-3">
+                        <h4 className="text-lg font-black text-black">{userPersona.name}</h4>
+                        <span className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-wider">
+                          Verified Taste
+                        </span>
+                      </div>
+                      <p className="text-sm text-black/60 leading-relaxed italic">
+                        "{userPersona.desc}"
+                      </p>
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {userPersona.top_genres.map(genre => (
+                          <span key={genre} className="text-[9px] font-bold text-black/40 bg-black/5 px-2 py-1 rounded-md">
+                            #{genre}
                           </span>
-                       </div>
-                       <p className="text-sm text-black/60 leading-relaxed italic">
-                         "{userPersona.desc}"
-                       </p>
-                       <div className="flex flex-wrap gap-2 pt-2">
-                          {userPersona.top_genres.map(genre => (
-                            <span key={genre} className="text-[9px] font-bold text-black/40 bg-black/5 px-2 py-1 rounded-md">
-                              #{genre}
-                            </span>
-                          ))}
-                       </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -212,7 +212,7 @@ export default function RecommenderPage() {
           )}
 
           {method === "demographic" && (
-             <p className="text-sm text-black/40 italic">Menampilkan film dengan skor rating tertinggi secara global.</p>
+            <p className="text-sm text-black/40 italic">Menampilkan film dengan skor rating tertinggi secara global.</p>
           )}
         </div>
 
@@ -220,7 +220,7 @@ export default function RecommenderPage() {
         <div className="relative">
           <AnimatePresence mode="wait">
             {loading ? (
-              <motion.div 
+              <motion.div
                 key="loading"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -231,7 +231,7 @@ export default function RecommenderPage() {
                 <p className="text-white/40 font-medium animate-pulse">Menghitung probabilitas...</p>
               </motion.div>
             ) : error ? (
-              <motion.div 
+              <motion.div
                 key="error"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -242,22 +242,22 @@ export default function RecommenderPage() {
                 <button onClick={fetchRecommendations} className="mt-4 text-xs text-white/40 hover:text-white underline">Coba lagi</button>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 key="results"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"
               >
                 {movies.map((movie, idx) => (
-                  <MovieCard 
-                    key={`${movie.id}-${idx}`} 
-                    movie={movie} 
+                  <MovieCard
+                    key={`${movie.id}-${idx}`}
+                    movie={movie}
                     index={idx}
                     onClick={() => {
-                        if (method === "content") return;
-                        setSelectedTitle(movie.title);
-                        setMethod("content");
-                    }} 
+                      if (method === "content") return;
+                      setSelectedTitle(movie.title);
+                      setMethod("content");
+                    }}
                   />
                 ))}
               </motion.div>
