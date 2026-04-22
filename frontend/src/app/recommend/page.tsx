@@ -41,7 +41,7 @@ export default function RecommenderPage() {
     if (method === "collaborative") {
       fetchUserPersona();
     }
-  }, [method, selectedGenres, profile, minRating, yearRange, userId]);
+  }, [method, selectedGenres, profile, minRating, yearRange, userId, selectedTitle]);
 
   const fetchMovies = async () => {
     try {
@@ -81,6 +81,14 @@ export default function RecommenderPage() {
   };
 
   const fetchRecommendations = async () => {
+    // Guard: Jika mode Content-Based tapi judul masih kosong, jangan panggil API
+    if (method === "content" && !selectedTitle) {
+      setMovies([]);
+      setLoading(false);
+      setError("");
+      return;
+    }
+
     setLoading(true);
     setError("");
     try {
