@@ -46,6 +46,14 @@ def get_user_profile(user_id):
     })
     return jsonify(profile)
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "status": "online",
+        "service": "King Romi Recommendation API",
+        "endpoints": ["/api/movies", "/api/recommend", "/api/user-profile/<id>"]
+    })
+
 @app.route('/api/movies', methods=['GET'])
 def get_movies():
     return jsonify(engine.get_all_movies())
