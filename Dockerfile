@@ -23,5 +23,8 @@ RUN python backend/setup_models.py
 # Hugging Face Spaces menggunakan port 7860 secara default
 EXPOSE 7860
 
+# Pindah ke direktori backend sebelum menyalakan server agar import python tidak error
+WORKDIR /app/backend
+
 # Jalankan aplikasi menggunakan gunicorn di port 7860
-CMD ["gunicorn", "--bind", "0.0.0.0:7860", "--workers", "1", "--timeout", "0", "backend.app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:7860", "--workers", "1", "--timeout", "0", "app:app"]
