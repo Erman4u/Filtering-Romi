@@ -173,9 +173,11 @@ export default function RecommenderPage() {
             <div className="flex flex-col items-center gap-6 w-full max-w-2xl">
               <div className="flex items-center gap-4 glass px-6 py-3 rounded-2xl text-black">
                 <User className="w-5 h-5 text-black/20" />
-                <span className="text-sm text-black/60">Simulasi untuk User ID:</span>
+                <span className="text-sm text-black/60">Simulasi untuk User ID (1-671):</span>
                 <input
                   type="number"
+                  min="1"
+                  max="671"
                   className="bg-black/5 border border-black/10 rounded-lg px-3 py-1 text-sm w-20 outline-none focus:border-blue-500 transition-colors font-bold"
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
